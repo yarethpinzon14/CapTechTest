@@ -1,5 +1,5 @@
 spring:
   application:
-    name: my-service
+    name: product-info
 server:
   port: 8080
