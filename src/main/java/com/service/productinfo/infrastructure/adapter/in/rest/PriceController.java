@@ -10,9 +10,12 @@ import io.swagger.v3.oas.annotations.media.Schema;
 import io.swagger.v3.oas.annotations.responses.ApiResponse;
 import io.swagger.v3.oas.annotations.responses.ApiResponses;
 import io.swagger.v3.oas.annotations.tags.Tag;
+import jakarta.validation.constraints.NotNull;
+import jakarta.validation.constraints.Positive;
 import lombok.RequiredArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.http.ResponseEntity;
+import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -20,6 +23,7 @@ import org.springframework.web.bind.annotation.RestController;
 
 import java.time.LocalDateTime;
 
+@Validated
 @RestController
 @RequestMapping("/api/v1/prices")
 @RequiredArgsConstructor
@@ -41,11 +45,11 @@ public class PriceController {
     })
     public ResponseEntity<PriceResponse> getApplicablePrice(
             @Parameter(description = "Application date in ISO format. Example: 2020-06-14T10:00:00")
-            @RequestParam @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime applicationDate,
+            @RequestParam @NotNull @DateTimeFormat(iso = DateTimeFormat.ISO.DATE_TIME) LocalDateTime applicationDate,
             @Parameter(description = "Product identifier. Example: 35455")
-            @RequestParam Long productId,
+            @RequestParam @NotNull @Positive Long productId,
             @Parameter(description = "Brand identifier. Example: 1 (ZARA)")
-            @RequestParam Long brandId
+            @RequestParam @NotNull @Positive Long brandId
     ) {
         PriceResponse response = priceRestMapper.toResponse(
                 findApplicablePriceUseCase.execute(applicationDate, productId, brandId)
