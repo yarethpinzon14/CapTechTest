@@ -1,0 +1,19 @@
+meta {
+  name: Test 1 - Request at 10:00 on June 14
+  type: http
+  seq: 1
+}
+
+get {
+  url: http://localhost:8080/api/v1/prices?applicationDate=2020-06-14T10:00:00&productId=35455&brandId=1
+  body: none
+  auth: none
+}
+
+assert {
+  res.status: eq 200
+  res.body.productId: eq 35455
+  res.body.brandId: eq 1
+  res.body.priceList: eq 1
+  res.body.price: eq 35.5
+}

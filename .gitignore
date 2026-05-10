@@ -13,3 +13,6 @@ target/
 
 # Windows
 Thumbs.db
+
+# Bruno
+bruno/product-info-collection/.env
